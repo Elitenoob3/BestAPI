@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Project", "Project\Project.csproj", "{5952315E-6352-4C35-95AC-12A5ECDC3EF9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlixNet", "FlixNet\FlixNet.csproj", "{5952315E-6352-4C35-95AC-12A5ECDC3EF9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
