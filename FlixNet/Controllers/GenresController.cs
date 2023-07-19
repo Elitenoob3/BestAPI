@@ -18,15 +18,19 @@ public class GenresController : Controller
     }
     
     [HttpGet("{id}")]
-    public ActionResult<string> GetGenresListId(int id)
+    public ActionResult<string> GetGenreId(int id)
     {
-        return Ok(id);
+        var data = _genreService.GetId(id);
+        if (data != null)
+            return Ok(data);
+        else
+            return NotFound("Entry Id does not exist");
     }
     
     [HttpGet]
     public ActionResult<string> GetGenresList([FromQuery] PaginationParams paginationParams)
     {
-        return Ok(paginationParams);
+        return Ok(_genreService.GetList(paginationParams));
     }
     
     //Add Value
@@ -38,8 +42,19 @@ public class GenresController : Controller
     
     //Update
     [HttpPut("{id}")]
-    public ActionResult<string> PutGenreId(int id)
+    public ActionResult<string> PutGenreId([FromBody] DGenre genre, int id)
     {
-        return Ok();
+        var data = _genreService.Put(genre, id);
+        if (data != null)
+            return Ok(data);
+        else
+            return NotFound("Entry Id does not exist");
+    }
+    
+    [HttpDelete("{id}")]
+    public ActionResult<string> DeleteGenre(int id)
+    {
+        _genreService.Delete(id);
+        return Ok("Entry deleted");
     }
 }
