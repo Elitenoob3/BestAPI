@@ -46,10 +46,10 @@ public class MoviesController : Controller
         return Ok(_movieServices.Put(dMovieUpdate, id));
     }
     
+    //Not intended
     [HttpDelete]
     public void Delete(int id)
     {
-        _movieServices.Delete(id);
     }
     
 }

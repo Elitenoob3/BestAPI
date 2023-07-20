@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Project.DOTS;
 using Project.DOTS.Movie;
+using Project.Services;
 
 namespace Project.Controllers;
 
@@ -8,29 +9,52 @@ namespace Project.Controllers;
 [ApiController]
 public class CastController : Controller
 {
+    private readonly CastServices _castServices;
+
+    public CastController()
+    {
+        _castServices = new CastServices();
+    }
+
+
+    //Get id
     [HttpGet("{id}")]
     public ActionResult<string> GetMovieCastListId([FromRoute] int movieId, int id)
     {
-        return Ok($"{movieId}, {id}");
+        var ret = _castServices.GetId(movieId, id);
+        if(ret != null) 
+            return Ok(ret);
+        return NotFound("Movie or cast Id not found");
     }
     
+    //get by term
     [HttpGet]
     public ActionResult<string> GetMovieCastList([FromRoute] int movieId, [FromQuery] PaginationParams paginationParams)
     {
-        return Ok(paginationParams);
+        var ret = _castServices.GetList(movieId, paginationParams);
+        if(ret != null) 
+            return Ok(ret);
+        return NotFound("Movie Id not found");
     }
     
-    //Add Value
+    
+    //Add or Post
     [HttpPost]
-    public ActionResult<string> Post([FromBody] DCast cast)
+    public ActionResult<string> Post([FromRoute] int movieId, [FromBody] DCast cast)
     {
-        return Ok();
+        var ret = _castServices.Add(movieId, cast);
+        if(ret != null) 
+            return Ok(ret);
+        return NotFound("Movie Id not found");
     }
     
-    //Update
+    //Update or Put
     [HttpPut("{id}")]
-    public ActionResult<string> PutCastId(int id)
+    public ActionResult<string> PutCastId([FromRoute] int movieId, int id, [FromBody] DCast cast)
     {
-        return Ok();
+        var ret = _castServices.Put(movieId, cast, id);
+        if (ret != null)
+            return Ok(ret);
+        return NotFound("Movie or cast Id invalid");
     }
 }

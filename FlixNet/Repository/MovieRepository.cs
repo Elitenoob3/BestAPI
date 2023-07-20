@@ -87,7 +87,7 @@ public class MovieRepository
         ret.DPagination.PerPage = paginationParams.PerPage;
         ret.DPagination.TotalCount = contextDb.Genres.Count();
 
-        if (paginationParams.Term == string.Empty)
+        if (paginationParams.Term == null)
         {
             ret.Items = contextDb.Movies.Include(x => x.Genres).ToList();
         }

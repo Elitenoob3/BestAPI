@@ -59,10 +59,11 @@ public class GenresController : Controller
             return NotFound("Entry Id does not exist");
     }
     
+    
+    //Not intended
     [HttpDelete("{id}")]
     public ActionResult<string> DeleteGenre(int id)
     {
-        _genreService.Delete(id);
         return Ok("Entry deleted");
     }
 }

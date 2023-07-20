@@ -1,4 +1,5 @@
-﻿using Project.DOTS;
+﻿using Microsoft.EntityFrameworkCore;
+using Project.DOTS;
 using Project.DOTS.Movie;
 using Project.Entities;
 using Project.Mapping;
@@ -12,6 +13,7 @@ public class GenreRepository
     {
         ContextDb contextDb = new ContextDb();
         contextDb.Genres.Add(genre);
+        genre.Movies.ForEach(x=> contextDb.Entry(x).State=EntityState.Unchanged);
         contextDb.SaveChanges();
         return contextDb.Genres.OrderBy(x=>x.Id).Last();
     }
@@ -31,7 +33,7 @@ public class GenreRepository
         ret.DPagination.PerPage = paginationParams.PerPage;
         ret.DPagination.TotalCount = contextDb.Genres.Count();
 
-        if (paginationParams.Term == "")
+        if (paginationParams.Term == null)
         {
             ret.Items = contextDb.Genres.ToList();
         }
