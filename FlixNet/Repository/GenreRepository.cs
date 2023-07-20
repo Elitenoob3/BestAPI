@@ -15,7 +15,7 @@ public class GenreRepository
         contextDb.SaveChanges();
         return contextDb.Genres.OrderBy(x=>x.Id).Last();
     }
-    
+
     public EGenre? GetIdDb(int id)
     {
         ContextDb contextDb = new ContextDb();
@@ -31,14 +31,19 @@ public class GenreRepository
         ret.DPagination.PerPage = paginationParams.PerPage;
         ret.DPagination.TotalCount = contextDb.Genres.Count();
 
-        ret.Items = contextDb.Genres.Where(x => x.Name.Contains(paginationParams.Term))
+        if (paginationParams.Term == "")
+        {
+            ret.Items = contextDb.Genres.ToList();
+        }
+        else
+            ret.Items = contextDb.Genres.Where(x => x.Name.Contains(paginationParams.Term))
             .Skip(paginationParams.PerPage * (paginationParams.Page - 1)).Take(paginationParams.PerPage).ToList();
 
         return ret;
     }
     
     
-    public EGenre? PutDb(EGenre genre, int id)
+    public EGenre? PutDb(DGenre genre, int id)
     {
         ContextDb contextDb = new ContextDb();
         var toUpdate = contextDb.Genres.Find(id);

@@ -16,7 +16,7 @@ public class GenresController : Controller
     {
         _genreService = new GenreService();
     }
-    
+
     [HttpGet("{id}")]
     public ActionResult<string> GetGenreId(int id)
     {
@@ -27,24 +27,32 @@ public class GenresController : Controller
             return NotFound("Entry Id does not exist");
     }
     
+    //Search by term
     [HttpGet]
     public ActionResult<string> GetGenresList([FromQuery] PaginationParams paginationParams)
     {
         return Ok(_genreService.GetList(paginationParams));
     }
     
-    //Add Value
+    //Add Value or Post
     [HttpPost]
     public ActionResult<string> Post([FromBody] DGenre genre)
     {
         return Ok(_genreService.Post(genre));
     }
     
-    //Update
+    //Update OR Put
     [HttpPut("{id}")]
-    public ActionResult<string> PutGenreId([FromBody] DGenre genre, int id)
+    public ActionResult<string> PutGenreId([FromBody] string genre, int id)
     {
-        var data = _genreService.Put(genre, id);
+        //PatchFix
+        DGenre enter = new DGenre()
+        {
+            Id = id,
+            Name = genre,
+        };
+        
+        var data = _genreService.Put(enter, id);
         if (data != null)
             return Ok(data);
         else

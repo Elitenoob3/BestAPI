@@ -43,8 +43,7 @@ public class GenreService
 
     public DGenre? Put(DGenre genre, int id)
     {
-        var eGenre = ProjectMapper.Instance.Map<DGenre, EGenre>(genre);
-        var toCovert = _genreRepository.PutDb(eGenre, id);
+        var toCovert = _genreRepository.PutDb(genre, id);
         if (toCovert != null)
         {        
             return ProjectMapper.Instance.Map<EGenre, DGenre>(toCovert);

@@ -1,6 +1,5 @@
 C:\Users\brain\Git\BestAPI\FlixNet\bin\Debug\net7.0\appsettings.Development.json
 C:\Users\brain\Git\BestAPI\FlixNet\bin\Debug\net7.0\appsettings.json
-C:\Users\brain\Git\BestAPI\FlixNet\bin\Debug\net7.0\MockDb\movies_database.json
 C:\Users\brain\Git\BestAPI\FlixNet\bin\Debug\net7.0\FlixNet.exe
 C:\Users\brain\Git\BestAPI\FlixNet\bin\Debug\net7.0\FlixNet.deps.json
 C:\Users\brain\Git\BestAPI\FlixNet\bin\Debug\net7.0\FlixNet.runtimeconfig.json

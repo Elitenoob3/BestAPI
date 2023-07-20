@@ -17,8 +17,20 @@ public class ProjectMapper
             cfg.CreateMap<DGenre, EGenre>().ReverseMap();
             cfg.CreateMap<DCast, ECast>().ReverseMap();
 
+            cfg.CreateMap<DMovieUpdate, EMovie>()
+                .ForMember(
+                    dest => dest.Genres,
+                    opt => 
+                        opt.MapFrom(src =>
+                        src.GenreIds.Select(id => new EGenre { Id = id }).ToList()
+                    )
+                );
+                    
+            
             cfg.CreateMap(typeof(DPaginationList<>), typeof(DPaginationList<>));
             cfg.CreateMap<DPagination, DPagination>();
+            
+            
 
         }).CreateMapper();
     }

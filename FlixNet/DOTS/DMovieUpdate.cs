@@ -1,12 +1,11 @@
-﻿namespace Project.DOTS.Movie;
+﻿namespace Project.DOTS;
 
-public class DMovie
+public class DMovieUpdate
 {
     public string Title { get; set; }
     public string Description { get; set; }
     
-    public List<DGenre> Genres { get; set; }
-    public List<DCast> Cast { get; set; }
+    public List<int> GenreIds { get; set; }
     
     public string VideoSourceUrl { get; set; }
     public string ImageUrl { get; set; }

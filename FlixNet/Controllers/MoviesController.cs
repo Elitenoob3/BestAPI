@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Project.DOTS;
 using Project.DOTS.Movie;
-using Project.MockDb;
+using Project.Services;
 
 namespace Project.Controllers;
 
@@ -9,31 +9,47 @@ namespace Project.Controllers;
 [ApiController]
 public class MoviesController : Controller
 {
+    private readonly MovieService _movieServices;
+
+    public MoviesController()
+    {
+        _movieServices = new MovieService();
+    }
+
     [HttpGet("{id}")]
     public ActionResult<string> GetMovieId(int id)
     {
-        MockDbConnection mockDb = new MockDbConnection();
-        return Ok(mockDb.GetMovieId(id));
+        var ret = _movieServices.GetId(id);
+        if (ret != null)
+            return Ok(_movieServices.GetId(id));
+        else
+            return NotFound("Movie not found by ID");
     }
 
     [HttpGet]
     public ActionResult<string> GetMoviesList([FromQuery] PaginationParams paginationParams)
     {
-        MockDbConnection mockDb = new MockDbConnection();
-        return Ok(mockDb.GetMovieQuery(paginationParams));
+        return Ok(_movieServices.GetList(paginationParams));
     }
 
-    //Add Value
+    //Add Value or Post
     [HttpPost]
-    public ActionResult<string> Post([FromBody] DMovie movie)
+    public ActionResult<string> Post([FromBody] DMovieUpdate movie)
     {
-        return Ok();
+        return Ok(_movieServices.Post(movie));
     }
     
-    //Update
+    //Update or Put
     [HttpPut("{id}")]
-    public ActionResult<string> PutMovieId(int id)
+    public ActionResult<string> PutMovieId([FromBody] DMovieUpdate dMovieUpdate, int id)
     {
-        return Ok();
+        return Ok(_movieServices.Put(dMovieUpdate, id));
     }
+    
+    [HttpDelete]
+    public void Delete(int id)
+    {
+        _movieServices.Delete(id);
+    }
+    
 }
